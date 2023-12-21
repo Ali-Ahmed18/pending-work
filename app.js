@@ -6,7 +6,7 @@ import router from "./Router/routes.js";
 import cloudinary from "cloudinary"
 dotenv.config();
 const app = Express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Body Parse
 app.use(Express.json());
