@@ -46,8 +46,8 @@ app.listen(PORT, () => {
 });
 
 
-// app.options('/api/v1/likeposts/:id', (req, res) => {
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type');
-//   res.status(200).send();
-// });
+app.options('/api/v1/likeposts/:id', (req, res) => {
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  res.status(200).send();
+});
