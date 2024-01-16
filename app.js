@@ -13,12 +13,14 @@ app.use(Express.json());
 app.use(urlencoded({ extended: true }));
 
 
-app.use(cors({
-  origin: "*", 
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-}));
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+app.options('*', cors());
 
 app.use(router);
 
@@ -46,8 +48,3 @@ app.listen(PORT, () => {
 });
 
 
-app.options('/api/v1/likeposts/:id', (req, res) => {
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  res.status(200).send();
-});
