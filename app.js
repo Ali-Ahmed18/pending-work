@@ -4,25 +4,28 @@ import dotenv from "dotenv";
 import cors from "cors";
 import router from "./Router/routes.js";
 import cloudinary from "cloudinary"
+
 dotenv.config();
 const app = Express();
 const PORT = process.env.PORT || 5000;
 
-// Body Parse
 app.use(Express.json());
 app.use(urlencoded({ extended: true }));
 
-// crossOrigin middleware/
-app.use(cors());
 
-// router//
-app.use(router)
+app.use(cors({
+  origin: "http://localhost:5173", 
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+}));
 
-// ConnectMongodb
+app.use(router);
+
+
 mongoose.connect(process.env.DB_URI);
 mongoose.connection.on("connected", () => console.log("MongoDB Connected"));
 mongoose.connection.on("error", (err) => console.log("MongoDB Error", err));
-
 
 
 cloudinary.v2.config({
@@ -34,9 +37,17 @@ cloudinary.v2.config({
 
 
 app.get("/", (req, res) => {
-  res.json("server is up");
+  res.json("Server is up");
 });
 
+
 app.listen(PORT, () => {
-  console.log(`server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+// app.options('/api/v1/likeposts/:id', (req, res) => {
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Content-Type');
+//   res.status(200).send();
+// });
